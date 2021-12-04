@@ -12,9 +12,9 @@ int main(int argc, char* argv[])
     printf("\n");	
 	printf("\n");
 	printf("-------------------------------------------------------------------\n");
-	printf("                 Local HT condor Control Panel                     \n");
+	printf("                    Local HTCondor Control Panel                   \n");
 	printf("           Cloud Computing, Computer Science Department            \n");
-	printf("                         at Chungbuk National University  by.keum  \n");
+	printf("                    at Chungbuk National University  by.keum       \n");
 	printf("-------------------------------------------------------------------\n");
 	printf("   1.VM instance lists                       2. VM instance start  \n");
 	printf("   3.VM instance create                      4. VM instance stop   \n");
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 			break;
 		case 2:
 			{ 
-              printf("Typing your Machine!(If you want to start all machine, typing 'all'):");
+              printf("Typing your Machine!(If you want to start all machine, please enter 'all'):");
 			  scanf("%s",string);
 			  if (strcmp(string, "all")==0){
 				  system("cd Vagrant && vagrant up");
@@ -43,10 +43,10 @@ int main(int argc, char* argv[])
 		    break;
 			}
 		case 3:
-			printf("create() Vagrantfile에있는NODE수정해줘야하는데? ANsible");
+			printf("vagrantfile, ansible setting");
 			break;
 		case 4:
-			printf("Choose your Machine(All Machine will shutdown, typing 'all'):");
+			printf("Choose your Machine(All Machine will shutdown, please enter 'all'):");
 			scanf("%s",string);
 			if(strcmp(string, "all")==0){
 			system("cd Vagrant && vagrant halt");
