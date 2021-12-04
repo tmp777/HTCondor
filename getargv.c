@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char* argv[])
 {
@@ -13,7 +14,7 @@ int main(int argc, char* argv[])
 	printf("-------------------------------------------------------------------\n");
 	printf("                 Local HT condor Control Panel                     \n");
 	printf("           Cloud Computing, Computer Science Department            \n");
-	printf("                              at Chungbuk National University      \n");
+	printf("                         at Chungbuk National University  by.keum  \n");
 	printf("-------------------------------------------------------------------\n");
 	printf("   1.VM instance lists                       2. VM instance start  \n");
 	printf("   3.VM instance create                      4. VM instance stop   \n");
@@ -31,21 +32,32 @@ int main(int argc, char* argv[])
 			break;
 		case 2:
 			{ 
-              printf("typing your Machine:");
+              printf("Typing your Machine!(If you want to start all machine, typing 'all'):");
 			  scanf("%s",string);
+			  if (strcmp(string, "all")==0){
+				  system("cd Vagrant && vagrant up");
+				  }
+			  else{
               sprintf(cmd, "cd Vagrant && vagrant up %s", string);
-              system(cmd);
+              system(cmd);}
 		    break;
 			}
 		case 3:
 			printf("create() Vagrantfile에있는NODE수정해줘야하는데? ANsible");
 			break;
 		case 4:
-			printf("shutdown all or choose one Machine");
+			printf("Choose your Machine(All Machine will shutdown, typing 'all'):");
+			scanf("%s",string);
+			if(strcmp(string, "all")==0){
 			system("cd Vagrant && vagrant halt");
+			}
+			else{
+				sprintf(cmd, "cd Vagrant && vagrant halt %s", string);
+				system(cmd);
+			}
 			break;
 		case 5:
-			printf("typing your ssh connecting machine:");
+			printf("Typing your machine connect to SSH:");
 			scanf("%s", string);
 			sprintf(cmd, "cd Vagrant && vagrant ssh %s", string);
 			system(cmd);
@@ -67,15 +79,7 @@ int main(int argc, char* argv[])
 
 
 
-	int i=0;
-//	const char *str = printf("cd Vagrant && vagrant status %s", argv[1]);
-//	int retval;
-//	retval = system(str);
-//	printf("Exit Status %d %s\n" , retval, argv[1]);
 
-	for (i =0; i < argc ; i++)
-		printf("argv[%d]: %s\n", i, argv[i]);
-	exit(0);
 }
 
 
