@@ -1,0 +1,73 @@
+---
+- name : HTCondor Installation
+  hosts : cluster  # [cluster] 하위의 호스트에 만 적용
+  become : yes
+  become_user : root  # root 권한으로 아래 명령어 실행
+  tasks :
+   - name : Disable SELinux  # SELinux 비활성화
+     shell : setenforce 0    # shell에 setenforce 0 명령어 전달
+   - name : Disable Firewalld  # Firewalld 중지 및 비활성화
+     service : name=firewalld state=stopped  # service 상태를 stopped으로 변경
+   - name : Modify hosts file   # 통신을 위해 호스트 파일 수정
+     blockinfile :
+       path: /etc/hosts    # 파일 경로
+       block: |            # 아래의 블록 내용을 파일에 추가
+        192.168.10.3 master.keumms.org master
+        192.168.10.4 slave1.keumms.org slave1
+        192.168.10.5 slave2.keumms.org slave2
+        192.168.10.6 slave3.keumms.org slave3
+
+   - name : install wget    # wget 패키지 설치
+     yum : name=wget state=present  # yum을 이용해 wget 설치
+   - name : Download RPM-GPG-KEY
+     get_url :
+       url : https://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
+       dest : /root/RPM-GPG-KEY-HTCondor
+   - name : Get Repo     # HTCondor 설치를 위한 저장소 추가
+     get_url:
+       url: https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo
+       dest: /etc/yum.repos.d/htcondor-stable-rhel7.repo
+   - name : Install condor
+     yum : name=condor state=present
+
+- name : HTCondor Installation
+  hosts : master     # [master] 하위 호스트에만 적용
+  become : yes
+  become_user : root
+  tasks :
+    - name: Creating a file with content    # condor config 파일 생성
+      copy:
+       dest: /etc/condor/config.d/condor_config.local
+       content: |
+          UID_DOMAIN = keumms.org
+          ALLOW_WRITE = *.keumms.org
+          CONDOR_ADMIN = root@$(FULL_HOSTNAME)
+          CONDOR_HOST = master.keumms.org
+          IN_HIGHPORT = 9999
+          IN_LOWPORT = 9000
+          REQUIRE_LOCAL_CONFIG_FILE = False
+          NETWORK_INTERFACE=eth1
+          DAEMON_LIST=MASTER,SCHEDD,COLLECTOR,NEGOTIATOR
+    - name : Enable HTCondor      # condor 실행
+      service : name=condor state=started enabled=yes
+
+- name : HTCondor Installation
+  hosts : slave     # [servant] 하위 호스트에만 적용
+  become : yes
+  become_user : root
+  tasks :
+    - name: Creating a file with content
+      copy:
+        dest: /etc/condor/config.d/condor_config.local
+        content: |
+             UID_DOMAIN = keumms.org
+             ALLOW_WRITE = *.keumms.org
+             CONDOR_ADMIN = root@$(FULL_HOSTNAME)
+             CONDOR_HOST = master.keumms.org
+             IN_HIGHPORT = 9999
+             IN_LOWPORT = 9000
+             REQUIRE_LOCAL_CONFIG_FILE = False
+             NETWORK_INTERFACE=eth1
+             DAEMON_LIST=MASTER,STARTD
+    - name : Enable HTCondor
+      service : name=condor state=started enabled=yes
