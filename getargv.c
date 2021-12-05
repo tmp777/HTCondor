@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
 
 	char cmd[100];
 	char string[20];
+	char string2[20];
 	int number =0;
 	while(1)
 	{
@@ -22,9 +23,9 @@ int main(int argc, char* argv[])
 	printf("                    at Chungbuk National University  by.keum       \n");
 	printf("-------------------------------------------------------------------\n");
 	printf("   1.VM instance lists                       2. VM instance start  \n");
-	printf("   3.VM instance create                      4. VM instance stop   \n");
+	printf("   3.VM instance create/setting              4. VM instance stop   \n");
 	printf("   5.VM instance ssh connect                                       \n");
-	printf("   7.VM destroy                                                    \n");
+	printf("   7.VM destroy(halt)                                              \n");
 	printf("                                             99. Quit              \n");
 	printf("-------------------------------------------------------------------\n");
 
@@ -68,8 +69,29 @@ int main(int argc, char* argv[])
 			system(cmd);
 			break;
 		case 7:
-			printf("Instance Setting()");
-			system("cd Vagrant && cat Vagrantfile");
+			printf("Choose your machine to destroy: ");
+			scanf("%s", string);
+			if(strcmp(string, "all") ==0){
+				printf("Do you really delete all of your Machines?(Yes or No): ");
+				scanf("%s", string2);
+
+				if(strcmp(string2, "Yes") ==0){
+					system("cd Vagrant && vagrant halt ");
+				}
+				else if(strcmp(string2, "No") ==0){
+					break;}
+
+			}else{
+				printf("Do  you relly delete %s(Yes, No) ?", string2);
+				scanf("%s", string2);
+				if(strcmp(string2, "Yes" ) == 0 ){
+				sprintf(cmd, "cd Vagrant && vagrant halt %s", string);
+				system(cmd);}
+				else if(strcmp(string2, "No") ==0){
+						break;
+				}
+			}
+			
 			break;	
 		case 99:
 			system("kill `ps -ef | grep ./test | grep -v grep | awk '{print $2}'`");

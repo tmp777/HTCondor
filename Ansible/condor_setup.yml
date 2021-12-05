@@ -14,9 +14,10 @@
        block: |            # 아래의 블록 내용을 파일에 추가
         192.168.10.3 master.keumms.org master
         192.168.10.4 slave1.keumms.org slave1
-# 192.168.10.5 slave2.keumms.org slave2
-#       192.168.10.6 slave3.keumms.org slave3
-#       192.168.10.7 slave4.keuums.org slave4
+        192.168.10.5 slave2.keumms.org slave2
+        192.168.10.6 slave3.keumms.org slave3
+        192.168.10.7 slave4.keuums.org slave4
+#192.168.10.8 slave5.keumms.org slave5
 
    - name : install wget    # wget 패키지 설치
      yum : name=wget state=present  # yum을 이용해 wget 설치
