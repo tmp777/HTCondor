@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 				scanf("%s", string2);
 
 				if(strcmp(string2, "Yes") ==0){
-					system("cd Vagrant && vagrant halt ");
+					system("cd Vagrant && vagrant destroy ");
 				}
 				else if(strcmp(string2, "No") ==0){
 					break;}
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 				printf("Do  you relly delete %s(Yes, No) ?", string2);
 				scanf("%s", string2);
 				if(strcmp(string2, "Yes" ) == 0 ){
-				sprintf(cmd, "cd Vagrant && vagrant halt %s", string);
+				sprintf(cmd, "cd Vagrant && vagrant destroy %s", string);
 				system(cmd);}
 				else if(strcmp(string2, "No") ==0){
 						break;
