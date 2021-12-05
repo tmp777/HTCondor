@@ -4,6 +4,11 @@
 
 int main(int argc, char* argv[])
 {
+
+
+	void menu();
+
+
 	char cmd[100];
 	char string[20];
 	int number =0;
@@ -19,7 +24,7 @@ int main(int argc, char* argv[])
 	printf("   1.VM instance lists                       2. VM instance start  \n");
 	printf("   3.VM instance create                      4. VM instance stop   \n");
 	printf("   5.VM instance ssh connect                                       \n");
-	printf("   7.Setting(Vagrantfile & Ansible)          8. VM destroy         \n");
+	printf("   7.VM destroy                                                    \n");
 	printf("                                             99. Quit              \n");
 	printf("-------------------------------------------------------------------\n");
 
@@ -43,13 +48,13 @@ int main(int argc, char* argv[])
 		    break;
 			}
 		case 3:
-			printf("vagrantfile, ansible setting");
+			menu();
 			break;
 		case 4:
 			printf("Choose your Machine(All Machine will shutdown, please enter 'all'):");
 			scanf("%s",string);
 			if(strcmp(string, "all")==0){
-			system("cd Vagrant && vagrant halt");
+     		system("cd Vagrant && vagrant halt");
 			}
 			else{
 				sprintf(cmd, "cd Vagrant && vagrant halt %s", string);
@@ -65,21 +70,67 @@ int main(int argc, char* argv[])
 		case 7:
 			printf("Instance Setting()");
 			system("cd Vagrant && cat Vagrantfile");
-			break;
-		case 8:
-			printf("destroy ...주의해..");
-			system("cd Vagrant && ls -al ");
-			break;
+			break;	
 		case 99:
 			system("kill `ps -ef | grep ./test | grep -v grep | awk '{print $2}'`");
 			break;
 
 	}
 	}
-
-
-
-
 }
+
+
+void menu(){
+
+	int number = 0;
+	while(1){
+	  printf("                                                                   \n");
+	  printf("-------------------------------------------------------------------\n");
+      printf("                 Before Create VM, do Settings                     \n");
+      printf("-------------------------------------------------------------------\n");
+      printf("   1.Edit Vgrantfile                        2. Check ssh-config    \n");
+      printf("   3.Check /etc/ansible/hosts               4. Network checking    \n");
+      printf("   5.condor_setup.yml                                              \n");
+	  printf("   7.Readme                                 8. Create              \n");
+      printf("                                            99. Exit               \n");
+      printf("-------------------------------------------------------------------\n");
+	  printf("                                                                   \n");
+
+      printf("Enter an integer:");
+      scanf("%d", &number);
+      switch(number){
+          case 1:
+             printf("vagrantfile");
+			 system("cd Vagrant && vi Vagrantfile");
+             break;
+		  case 2:
+			 system("cd Vagrant && vagrant ssh-config");
+			 break;
+          case 3:
+             printf("absible/hosts");
+			 system("sudo vi /etc/ansible/hosts");
+             break;
+          case 4:
+             printf("network check");
+			 system("ansible all -m ping");
+             break;
+          case 5:
+             printf("check");
+			 system("cd Ansible && vi condor_setup.yml");
+             break;
+		  case 7:
+			 system("cat readme.txt");
+			 break;
+		  case 8:
+			 system("cd Vagrant && vagrant up ; cd .. ; cd Ansible && ansible-playbook condor_setup.yml");
+			 break;
+	  }
+	  if(number == 99)
+	    break;
+              
+
+	}
+	}
+
 
 
