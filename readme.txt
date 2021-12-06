@@ -1,5 +1,7 @@
 
-I. Local 영역에서 VirtualBox 를 사용해서 HTCondor Pool 을 설치 후 실행 시켜주는 프로그램입니다.
+I. Local 영역에서 VirtualBox 를 사용해서 머신에 HTCondor Pool을 설치 후 동작 시켜주는 프로그램입니다.
+
+
  1) 이 프로그램은 Vagrant, Ansible 을 활용해 HTCondor을 쉽게 조작 할 수 있게만든 HTCondor Panel 입니다. 
  2) HTcondor Pool이 동작중에 동적으로 HTcondor pool 에 들어있는  VM 을 추가/제거 가 가능합니다. 
  3) 프로그램 실행방법 :  ./start 로 프로그램을 실행시키시면 됩니다. 
@@ -12,10 +14,8 @@ I. Local 영역에서 VirtualBox 를 사용해서 HTCondor Pool 을 설치 후 �
 II. Panel에서 '3. VM instance Create' 을 설명해주는 부분입니다.
 
 
-
 우선 VM을 만들어 주고 네트워크를 연결시켜서 각각의 VM 에 condor을 설치해주는 작업을 합니다.
 위의 작업이 모두 진행되면 HTcondor pool 을 실행시킬 준비가 완료 된 것 입니다.
-
 
 
 1. Edit Vgrantfile (Vagrant up)
