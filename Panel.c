@@ -8,7 +8,6 @@ int main(int argc, char* argv[])
 
 	void menu();
 
-
 	char cmd[100];
 	char string[20];
 	char string2[20];
