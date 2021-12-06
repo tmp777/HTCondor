@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 			
 			break;	
 		case 99:
-			system("kill `ps -ef | grep ./test | grep -v grep | awk '{print $2}'`");
+			system("kill `ps -ef | grep ./start | grep -v grep | awk '{print $2}'`");
 			break;
 
 	}
